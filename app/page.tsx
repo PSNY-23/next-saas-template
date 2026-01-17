@@ -1,14 +1,19 @@
-import { caller } from "@/trpc/server";
+// import { caller } from "@/trpc/server";
 
-export default async function Home() {
-  const greeting = await caller.user.hello({text: 'pankaj'})
-  console.log(greeting);
+export default function Home() {
+  // const greeting = await caller.user.hello({text: 'pankaj'})
+  // console.log(greeting);
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <div>
-        This is home page.
-      </div>
+      const router = useRouter(); return (
+      <main className="flex items-center justify-center h-screen bg-neutral-950 text-white">
+        <div className="flex gap-4">
+          <p>this is the root page</p>
+        </div>
+      </main>
+      );
     </div>
   );
 }

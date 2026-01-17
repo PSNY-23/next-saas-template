@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { email, password } = await req.json();
+    const { email, password, name } = await req.json();
 
     //Basic validation
     if (!email || !password) {
@@ -15,6 +15,7 @@ export const POST = async (req: NextRequest) => {
       data: {
         email,
         password,
+        name,
       },
     });
 
