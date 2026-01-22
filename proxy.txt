@@ -1,0 +1,70 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';  // Import your auth session handling
+
+// Define protected routes for different roles
+const adminProtectedRoutes = ['/admin/dashboard', '/admin/users']; // Example routes for admin
+const userProtectedRoutes = ['/dashboard'];  // Example routes for users
+const publicRoutes = ['/', '/login', '/register']; // Public routes accessible by anyone
+
+export async function proxy(request: NextRequest) {
+  console.log('Proxy starts');
+
+  const pathname = request.nextUrl.pathname;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Check if the user is logged in and has a valid role
+  if (!session || !session.user.role) {
+    // If no session or role, and the user is not on a public route, redirect to login
+    if (!publicRoutes.includes(pathname)) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  }
+
+  // Extract the current path
+  const currentPath = request.nextUrl.pathname;
+
+  // If the user is accessing a public route (login/register) while logged in, redirect them to their dashboard
+  if (publicRoutes.includes(currentPath) && session?.user.role) {
+    if (session.user.role === 'admin') {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+    }
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
+
+  // Admin route checks
+  if (session?.user.role === 'admin') {
+    if (adminProtectedRoutes.some(route => currentPath.startsWith(route))) {
+      // Admin is allowed on admin protected routes
+      // Continue to the page
+    } else {
+      // Redirect to the admin dashboard if admin tries to access non-admin routes
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+    }
+  }
+
+  // User route checks
+  if (session?.user.role === 'user') {
+    if (userProtectedRoutes.some(route => currentPath.startsWith(route))) {
+      // User is allowed on user protected routes
+      // Continue to the page
+    } else {
+      // Redirect users to their dashboard if they try to access admin routes
+      if (adminProtectedRoutes.some(route => currentPath.startsWith(route))) {
+        return NextResponse.redirect(new URL('/dashboard', request.url));
+      }
+    }
+  }
+
+  // If the route is not public and requires a role check but the role doesn't match, redirect accordingly
+  console.log('Proxy running ....ends')
+
+  // Continue to the requested page
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/admin/:path*', '/dashboard/:path*', '/login', '/register'], // Match relevant routes
+};

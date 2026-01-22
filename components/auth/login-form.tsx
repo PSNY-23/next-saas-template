@@ -17,7 +17,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const loginSchema = z.object({
@@ -28,8 +27,6 @@ const loginSchema = z.object({
 type LoginFormSchemaType = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-
-  const router = useRouter();
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
@@ -38,19 +35,24 @@ export default function LoginForm() {
   const { handleSubmit, control, formState } = form;
 
   async function onSubmit(values: LoginFormSchemaType) {
-     const {data, error} = await authClient.signIn.email({
-      email: values.email,
-      password: values.password
-     });
-
-     if(error) {
-      toast.error(error.message || 'User Signin failed');
-      console.error(error.message);
-      return;
-     }
-     toast.success('Logged in successfully!');
-    router.push('/dashboard');
-
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+        callbackURL: '/dashboard'
+      },
+      {
+        onSuccess: async () => {
+          toast.success('Logged in successfully!');
+        },
+        onError: ctx => {
+          // Better Auth provides error details in the ctx object
+          const errorMessage = ctx.error.message || 'User Signin failed';
+          toast.error(errorMessage);
+          console.error('Sign-in error:', ctx.error);
+        },
+      }
+    );
   }
 
   const handleSocialLogin = () => {
@@ -69,12 +71,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel htmlFor="email">Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  id="email"
-                  placeholder="Enter your email"
-                  {...field}
-                />
+                <Input type="email" id="email" placeholder="Enter your email" {...field} />
               </FormControl>
               {formState.errors.email && (
                 <FormMessage id="email-error" className="text-sm text-destructive">
@@ -93,12 +90,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel htmlFor="password">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  id="password"
-                  placeholder="Enter your password"
-                  {...field}
-                />
+                <Input type="password" id="password" placeholder="Enter your password" {...field} />
               </FormControl>
               {formState.errors.password && (
                 <FormMessage id="password-error" className="text-sm text-destructive">
@@ -136,8 +128,13 @@ export default function LoginForm() {
           </Button>
         </div>
 
-        <div className='text-sm flex items-center justify-center'>
-          <p className='text-muted-foreground'>Don&apos;t have an Account? <Link href='/register' className="text-foreground">Register</Link></p>
+        <div className="text-sm flex items-center justify-center">
+          <p className="text-muted-foreground">
+            Don&apos;t have an Account?{' '}
+            <Link href="/register" className="text-foreground">
+              Register
+            </Link>
+          </p>
         </div>
       </form>
     </Form>

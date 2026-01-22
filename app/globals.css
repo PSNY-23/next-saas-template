@@ -44,6 +44,65 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /*
+    Custom tailwindcss classes
+  */
+  
+  --shadow-header_shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+
+  --color-dark_black: #1b1d1e;
+  --color-purple_blue: #4928fd;
+  --color-purple: #ba81ee;
+  --color-blue: #70b5ff;
+  --color-orange: #ffaf68;
+  --color-green: #79d45e;
+  --color-pink: #f4889a;
+  --color-blue_gradient: #d9f3fc;
+  --color-yellow_gradient: #fdf1d3;
+  --color-pale-yellow: #f6e683;
+  --color-dark_yellow_gradient: #443f32;
+  --color-dark_blue_gradient: #303d42;
+
+  --breakpoint-Xsm: 425px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1024px;
+  --breakpoint-xxl: 1280px;
+  --breakpoint-2xl: 1440px;
+
+  --spacing-25: 25rem;
+  --spacing-32: 32rem;
+  --spacing-38: 38rem;
+  --spacing-48: 48rem;
+  --spacing-50: 50rem;
+  --spacing-3_75: 3.75rem;
+  --spacing-6_5: 6.5rem;
+  --spacing-18_75: 18.75rem;
+  --spacing-31_25: 31.25rem;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
 }
 
 :root {
@@ -115,11 +174,121 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* @layer base (Global Styles) */
 @layer base {
-  * {
+  /* Apply border and outline to all elements */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
     @apply border-border outline-ring/50;
   }
+
+  /* Default styles for body */
   body {
     @apply bg-background text-foreground;
+    @apply text-base font-normal;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Default border color for elements */
+  * {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+/* @layer components (Reusable UI Components) */
+@layer components {
+  /* Typography components */
+  h1 {
+    @apply 2xl:text-9xl 2xl:leading-39 md:text-7xl text-5xl font-medium text-dark_black dark:text-white;
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl font-medium text-dark_black dark:text-white;
+  }
+
+  h3 {
+    @apply text-5xl font-medium text-dark_black dark:text-white;
+  }
+
+  h4 {
+    @apply text-2xl font-medium text-dark_black dark:text-white;
+  }
+
+  h5 {
+    @apply text-xl font-medium;
+  }
+
+  h6 {
+    @apply text-lg lg:text-xl font-medium;
+  }
+
+  p {
+    @apply text-base font-normal text-dark_black dark:text-white;
+  }
+
+  /* Custom button component */
+  .btn {
+    @apply bg-blue-500 text-white px-4 py-2 rounded-lg;
+  }
+
+  /* Custom card component */
+  .card {
+    @apply bg-white shadow-lg rounded-lg p-6;
+  }
+}
+
+/* @layer utilities (Custom Utilities) */
+@layer utilities {
+  /* Custom utility for instrument font */
+  .instrument-font {
+    font-family: 'Instrument Serif', serif;
+  }
+
+  /* Custom utility for hero mask */
+  .hero-mask {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      white 20%,
+      white 80%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      white 20%,
+      white 80%,
+      transparent
+    );
+  }
+
+  /* Utility for container */
+  .container {
+    @apply w-full max-w-[82.8rem] my-0 mx-auto py-0 sm:px-7 px-5;
+  }
+
+  /* Scroll behavior and font-family for HTML */
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter Tight', sans-serif;
+    @apply dark:bg-dark_black;
+  }
+
+  /* Reset for all elements */
+  * {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Utility for balanced text */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+

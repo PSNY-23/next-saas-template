@@ -9,9 +9,13 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) {
+  if (!session || !session.user.role) {
     redirect('/login');
+  };
+  if(session.user.role === 'admin') {
+    redirect('/admin/dashboard')
   }
+
 
   return (
     <>

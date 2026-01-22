@@ -5,7 +5,6 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
-  LogOut,
   Sparkles,
 } from "lucide-react"
 
@@ -29,6 +28,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { LogoutButton } from "./logout-button"
 
 export function NavUser({
   user,
@@ -102,9 +102,8 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
+            <DropdownMenuItem asChild>  
+              <LogoutButton className="w-full" />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

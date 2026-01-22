@@ -4,6 +4,8 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TRPCReactProvider } from '@/trpc/client';
 import { Toaster } from '@/components/ui/sonner';
+import ScrollToTop from '@/components/scroll-to-top'
+
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,9 +30,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider>
+        <ThemeProvider 
+        attribute='class'
+        defaultTheme='system'
+        enableSystem
+        disableTransitionOnChange
+        >
           <TRPCReactProvider>
-          {children}
+            {children}
+            <ScrollToTop/>
             <Toaster />
           </TRPCReactProvider>
         </ThemeProvider>
