@@ -1,5 +1,3 @@
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import {
   Table,
   TableHead,
@@ -9,21 +7,16 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import Image from 'next/image';
+import { caller } from '@/trpc/server';
 
 const Page = async () => {
-  const users = await auth.api.listUsers({
-    query: {
-      limit: 100,
-      offset: 0,
-    },
-    headers: await headers(),
-  });
+  const users = await caller.user.userList();
   console.log('users: ', users);
   return (
     <div className="min-h-screen px-6 w-full">
       <div>This is admin user-management page</div>
       <div>
-        <p>Total users: {users.total}</p>
+        <p>Total users: {users.length}</p>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -37,7 +30,7 @@ const Page = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.users.map(user => (
+              {users.map(user => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
                   <TableCell>{user.name}</TableCell>

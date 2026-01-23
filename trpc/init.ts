@@ -7,7 +7,7 @@ export const createTRPCContext = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  return { session };
+  return {session : session ?? null};
 });
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
@@ -27,8 +27,9 @@ export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
 export const publicProcedure = t.procedure;
-export const protectedProcedure = t.procedure.use(function isAuthed(opts) {
-  if (!opts.ctx.session?.user?.email) {
+export const userProtectedProcedure = t.procedure.use(async(opts) => {
+   // Check if session is present and valid
+  if (!opts.ctx.session) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
       message: 'User not authorized'
@@ -41,3 +42,26 @@ export const protectedProcedure = t.procedure.use(function isAuthed(opts) {
     },
   });
 });
+export const adminProtectedProcedure = t.procedure.use(async(opts) => {
+  if (!opts.ctx.session) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'User not authorized'
+    });
+  }
+
+  //Check if the role = ADMIN
+  if(opts.ctx.session.user.role !== 'ADMIN') {
+    throw new TRPCError({
+      code: 'FORBIDDEN',
+      message: 'Admin access required'
+    })
+  }
+  return opts.next({
+    ctx: {
+      // Infers the `session` as non-nullable
+      session: opts.ctx.session,
+    },
+  });
+});
+
