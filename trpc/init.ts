@@ -50,8 +50,8 @@ export const adminProtectedProcedure = t.procedure.use(async(opts) => {
     });
   }
 
-  //Check if the role = ADMIN
-  if(opts.ctx.session.user.role !== 'ADMIN') {
+  //Check if the role = admin
+  if(opts.ctx.session.user.role !== 'admin') {
     throw new TRPCError({
       code: 'FORBIDDEN',
       message: 'Admin access required'

@@ -9,7 +9,7 @@ export const chekcAdminSession = async () => {
   if (!session || !session.user.role) {
     redirect('/login');
   }
-  if (session.user.role === 'USER') {
+  if (session.user.role === 'user') {
     redirect('/dashboard');
   }
 };
@@ -20,7 +20,7 @@ export const checkUserSession = async () => {
   if (!session) {
     redirect('/login');
   }
-  if (session.user.role === 'ADMIN') {
+  if (session.user.role === 'admin') {
     redirect('/admin/dashboard');
   }
 };
@@ -29,10 +29,10 @@ export const checkNoSession = async () => {
     headers: await headers(),
   });
 
-  if (session && session.user.role === 'ADMIN') {
+  if (session && session.user.role === 'admin') {
     redirect('/admin/dashboard');
   }
-  if (session && session.user.role === 'USER') {
+  if (session && session.user.role === 'user') {
     redirect('/dashboard');
   }
 };

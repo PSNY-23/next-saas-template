@@ -190,7 +190,7 @@ export default function RegisterForm() {
               type="submit" 
               className="w-full" 
               disabled={formState.isSubmitting}>
-               {formState.isSubmitting && <FiLoader size="small" className='animate-spin text-background'/>}
+               {formState.isSubmitting && <FiLoader className='h-8 w-8 animate-spin text-background'/>}
                <span className={cn('transition-all duration-150 ease-in', formState.isSubmitting && 'animate-pulse ml-1')}>Register</span>
             </Button>
           </form>

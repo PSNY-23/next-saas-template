@@ -1,58 +1,22 @@
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '@/components/ui/table';
-import Image from 'next/image';
 import { caller } from '@/trpc/server';
+import { UserTable } from '@/components/admin/users-table';
+import { UserChart } from '@/components/admin/user-chart';
 
 const Page = async () => {
   const users = await caller.user.userList();
-  console.log('users: ', users);
+  const createdAtArray = users.map((user) => (
+    user.createdAt
+  ))
   return (
     <div className="min-h-screen px-6 w-full">
-      <div>This is admin user-management page</div>
-      <div>
-        <p>Total users: {users.length}</p>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Email Verified</TableHead>
-                <TableHead>Image</TableHead>
-                <TableHead>Other Fields</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map(user => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.emailVerified ? 'Yes' : 'No'}</TableCell>
-                  <TableCell>
-                    {user.image ? (
-                      <Image
-                        src={user.image}
-                        alt={user.name}
-                        style={{ width: 50, height: 50, borderRadius: '50%' }}
-                      />
-                    ) : (
-                      'No Image'
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold my-4">User Management</h1>
+        <p className=" font-semibold text-lg">
+          Total users: {users.length}</p>
       </div>
+      {/* TODO: configure chart to show real user*/}
+      <UserChart createdAtArray={createdAtArray} />
+      <UserTable userList={users} />
     </div>
   );
 };

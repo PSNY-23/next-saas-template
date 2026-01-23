@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { TRPCReactProvider } from '@/trpc/client';
 import { Toaster } from '@/components/ui/sonner';
 import ScrollToTop from '@/components/scroll-to-top'
+import { LenisClient } from '@/components/lenis-client';
 
 
 const geistSans = Geist({
@@ -28,6 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <>
+    <LenisClient/>
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider 
@@ -44,5 +47,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </>
   );
 }
