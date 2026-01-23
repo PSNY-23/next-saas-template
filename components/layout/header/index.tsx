@@ -8,9 +8,9 @@ import HeaderLink from './Navigation/HeaderLink'
 import Logo from './Logo'
 import MobileHeader from './Navigation/MobileHeader'
 import ThemeToggler from './ThemeToggle'
-import { authClient } from '@/lib/auth-client'
 import { layoutData } from '@/utils/data'
 import { useTheme } from 'next-themes'
+import { authClient } from '@/lib/auth-client'
 
 const { headerData } = layoutData;
 
@@ -61,7 +61,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem('user')
-    authClient.signOut()
+    authClient.signOut();
     setUser(null)
   }
 

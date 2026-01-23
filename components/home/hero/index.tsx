@@ -28,11 +28,11 @@ function HeroSection() {
               // {...bottomAnimation}
               className='relative flex flex-col text-center items-center gap-4'>
               <h1>
-                <TextGenerateEffect words="Building bold brands with" />
+                <TextGenerateEffect words="Building bold brands with" className='text-8xl' />
                 <TextGenerateEffect
                   words="thoughtful design"
                   delay={0.8}
-                  className="italic font-normal instrument-font"
+                  className="italic font-normal instrument-font text-8xl"
                 />
               </h1>
               <p className='max-w-38 text-dark_black/60 dark:text-white/60'>
@@ -50,7 +50,7 @@ function HeroSection() {
                 <Link
                   href='/contact'
                   className='group bg-purple_blue text-white font-medium flex flex-row justify-between items-center py-2 px-5 rounded-full max-w-64 w-full md:py-3 border border-purple_blue transition-all duration-200 ease-in-out hover:bg-transparent hover:text-purple_blue'>
-                  <span className='flex text-start transform transition-transform duration-200 ease-in-out group-hover:translate-x-28'>
+                  <span className='flex text-lg font-semibold text-start transform transition-transform duration-200 ease-in-out group-hover:translate-x-28'>
                     Get Started
                   </span>
                   <svg

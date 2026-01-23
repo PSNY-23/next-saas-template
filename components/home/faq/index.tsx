@@ -13,11 +13,11 @@ function Faq() {
           <div className='flex flex-col gap-10 md:gap-20'>
             <div className='max-w-md text-center mx-auto'>
               <h2>
-                <TextGenerateEffect words="Got questions? We’ve got" />
+                <TextGenerateEffect words="Got questions? We’ve got" className='text-5xl' />
                 <TextGenerateEffect
                   words="answers"
                   delay={1}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>
@@ -30,14 +30,14 @@ function Faq() {
                   <AccordionItem
                     key={index}
                     value={`item-${index}`}
-                    className='p-6 border border-dark_black/10 dark:border-white/50 group'>
+                    className='px-6 py-2 border group rounded-2xl text-muted-foreground'>
                     <AccordionTrigger className='group-hover:cursor-pointer'>
-                      <h4 className='text-dark_black dark:text-white/80'>
+                      <h4 className='text-xl'>
                         {item.faq_que}
                       </h4>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className='text-base font-normal text-dark_black/60 dark:text-white/60'>
+                      <p className='text-base font-normal '>
                         {item.faq_ans}
                       </p>
                     </AccordionContent>

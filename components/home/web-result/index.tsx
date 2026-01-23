@@ -21,7 +21,7 @@ function WebResult() {
             <div className='flex flex-col items-center justify-center text-center gap-3'>
               <h2 className='max-w-6xl'>
                 <TextGenerateEffect words='Crafting exceptional, well experienced & technology driven
-                strategies to drive impactful results with' duration={0.2} />
+                strategies to drive impactful results with' duration={0.2} className='text-5xl' />
               </h2>
               <div>
                 <h2>
@@ -36,7 +36,7 @@ function WebResult() {
                         height={40}
                         style={{ width: 'auto', height: 'auto' }}
                       />
-                      <span className='instrument-font italic font-normal'>
+                      <span className='instrument-font text-5xl py-2 italic font-normal'>
                         {items.name}
                       </span>
                     </span>

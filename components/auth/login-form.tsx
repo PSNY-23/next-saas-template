@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormField,
@@ -39,7 +40,7 @@ export default function LoginForm() {
       {
         email: values.email,
         password: values.password,
-        callbackURL: '/dashboard'
+        callbackURL: '/dashboard',
       },
       {
         onSuccess: async () => {
@@ -61,82 +62,95 @@ export default function LoginForm() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Email */}
-        <FormField
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <FormControl>
-                <Input type="email" id="email" placeholder="Enter your email" {...field} />
-              </FormControl>
-              {formState.errors.email && (
-                <FormMessage id="email-error" className="text-sm text-destructive">
-                  {formState.errors.email.message}
-                </FormMessage>
+    <Card>
+      <CardHeader>
+        <CardTitle>Login to your account</CardTitle>
+        <CardDescription>Enter your email below to login to your account</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* Email */}
+            <FormField
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" id="email" placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  {formState.errors.email && (
+                    <FormMessage id="email-error" className="text-sm text-destructive">
+                      {formState.errors.email.message}
+                    </FormMessage>
+                  )}
+                </FormItem>
               )}
-            </FormItem>
-          )}
-        />
+            />
 
-        {/* Password */}
-        <FormField
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <FormControl>
-                <Input type="password" id="password" placeholder="Enter your password" {...field} />
-              </FormControl>
-              {formState.errors.password && (
-                <FormMessage id="password-error" className="text-sm text-destructive">
-                  {formState.errors.password.message}
-                </FormMessage>
+            {/* Password */}
+            <FormField
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  {formState.errors.password && (
+                    <FormMessage id="password-error" className="text-sm text-destructive">
+                      {formState.errors.password.message}
+                    </FormMessage>
+                  )}
+                </FormItem>
               )}
-            </FormItem>
-          )}
-        />
+            />
 
-        {/* Submit Button */}
-        <Button type="submit" className="w-full" disabled={formState.isSubmitting}>
-          {formState.isSubmitting ? 'Logging...' : 'Log In'}
-        </Button>
+            {/* Submit Button */}
+            <Button type="submit" className="w-full" disabled={formState.isSubmitting}>
+              {formState.isSubmitting ? 'Logging...' : 'Log In'}
+            </Button>
 
-        {/* Social Login */}
-        <div className="flex flex-col gap-2 mt-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleSocialLogin}
-            className="w-full flex items-center justify-center space-x-2"
-          >
-            <FcGoogle />
-            <span>Sign in with Google</span>
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleSocialLogin}
-            className="w-full flex items-center justify-center space-x-2"
-          >
-            <FaGithub />
-            <span>Sign in with GitHub</span>
-          </Button>
-        </div>
+            {/* Social Login */}
+            <div className="flex flex-col gap-2 mt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleSocialLogin}
+                className="w-full flex items-center justify-center space-x-2"
+              >
+                <FcGoogle />
+                <span>Sign in with Google</span>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleSocialLogin}
+                className="w-full flex items-center justify-center space-x-2"
+              >
+                <FaGithub />
+                <span>Sign in with GitHub</span>
+              </Button>
+            </div>
 
-        <div className="text-sm flex items-center justify-center">
-          <p className="text-muted-foreground">
-            Don&apos;t have an Account?{' '}
-            <Link href="/register" className="text-foreground">
-              Register
-            </Link>
-          </p>
-        </div>
-      </form>
-    </Form>
+            <div className="text-sm flex items-center justify-center">
+              <p className="text-muted-foreground">
+                Don&apos;t have an Account?{' '}
+                <Link href="/register" className="text-foreground">
+                  Register
+                </Link>
+              </p>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

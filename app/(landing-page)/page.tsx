@@ -1,4 +1,3 @@
-// import { caller } from "@/trpc/server";
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer/Footer'
 import Achievements from "@/components/home/achievements";
@@ -12,17 +11,16 @@ import OnlinePresence from "@/components/home/online-presence";
 import Solutions from "@/components/home/solution";
 import Subscription from "@/components/home/subscription";
 import WebResult from "@/components/home/web-result";
-
-export default function Page() {
-  // const greeting = await caller.user.hello({text: 'pankaj'})
-  // console.log(greeting);
+import { checkNoSession } from '@/utils/check-session';
 
 
+export default async function Page() {
+  
+  await checkNoSession();
   return (
-    
     <>
      <Header />
-        <main className=''>
+        <main className='mx-auto'>
           <HeroSection/>
           <Brand/>
           <WebResult/>

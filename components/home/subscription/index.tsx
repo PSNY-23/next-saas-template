@@ -14,11 +14,11 @@ function Subscription() {
           <div className='flex flex-col gap-10 md:gap-20'>
             <div className='max-w-25 text-center mx-auto'>
               <h2>
-                <TextGenerateEffect words="Pick the plan that fits your" />
+                <TextGenerateEffect words="Pick the plan that fits your" className='text-5xl'/>
                 <TextGenerateEffect
                   words="start-up"
                   delay={1.2}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>

@@ -24,11 +24,11 @@ function CustomerStories() {
           <div className="flex flex-col justify-center gap-10 md:gap-20">
             <div className="mx-auto max-w-2xl flex items-center text-center">
               <h2>
-                <TextGenerateEffect words="What our satisfied customers are saying" />
+                <TextGenerateEffect words="What our satisfied customers are saying" className='text-5xl' />
                 <TextGenerateEffect
                   words="about us"
                   delay={1}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>
@@ -47,7 +47,7 @@ function CustomerStories() {
                     Customer stories
                   </span>
                   <div className="flex flex-col gap-6">
-                    <h3 className="text-white">
+                    <h3 className="text-white text-5xl">
                       “Awake’s expertise transformed my vision into success!”
                     </h3>
                     <div className="flex flex-col gap-1">

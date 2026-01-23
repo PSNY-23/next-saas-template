@@ -20,20 +20,20 @@ function Solutions() {
         <div className='container'>
           <div
             ref={ref}
-            className='py-16 md:py-28 px-6 border border-dark_black/10 rounded-3xl bg-[linear-gradient(90deg,#CDEFFB_0%,#FFFFFF_33.23%,#FFFFFF_65.77%,#FDEECB_100%)] backdrop-blur-[200px] dark:opacity-80'>
+            className='py-16 md:py-28 px-6 outline-2 outline-offset-2 rounded-3xl bg-[linear-gradient(90deg,#CDEFFB_0%,#FFFFFF_33.23%,#FFFFFF_65.77%,#FDEECB_100%)] dark:opacity-50 backdrop-blur-[200px]'>
             <motion.div
               {...bottomAnimation}
               className='flex flex-col gap-6 items-center md:max-w-3xl mx-auto'>
-              <div className='flex flex-col gap-3 items-center text-center text-black'>
-                <h2 className='text-3xl md:text-5xl text-black'>
-                  <TextGenerateEffect words="Innovative solutions for" />
+              <div className='flex flex-col gap-3 items-center text-center'>
+                <h2 className='text-3xl md:text-5xl'>
+                  <TextGenerateEffect words="Innovative solutions for" className='text-black' />
                   <TextGenerateEffect
                     words="bold brands"
                     delay={1}
-                    className="italic font-normal instrument-font"
+                    className="italic font-normal instrument-font text-black"
                   />
                 </h2>
-                <p className='dark:text-dark_black'>
+                <p className='text-black/80'>
                   Looking to elevate your brand? We craft immersive experiences
                   that captivate, engage, and make your business unforgettable
                   in every interaction.

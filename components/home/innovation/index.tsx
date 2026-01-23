@@ -27,11 +27,11 @@ function Innovation() {
                 {...bottomAnimation(1)}
                 className='max-w-(--breakpoint-Xsm) text-center'>
                 <h2>
-                  <TextGenerateEffect words="Where innovation meets" delay={0.4} />
+                  <TextGenerateEffect words="Where innovation meets" delay={0.4} className='text-5xl' />
                   <TextGenerateEffect
                     words="aesthetics"
                     delay={1}
-                    className="italic font-normal instrument-font"
+                    className="italic font-normal instrument-font text-5xl"
                   />
                 </h2>
               </motion.div>
@@ -72,15 +72,15 @@ function Innovation() {
               </div>
             </div>
             <div
-              className='flex flex-col gap-4 xl:flex xl:flex-row bg-dark_black items-center justify-between dark:bg-white/5 py-8 px-7 sm:px-12 rounded-3xl w-full'>
-              <h4 className='text-white text-center xl:text-left'>
+              className='flex flex-col gap-4 xl:flex xl:flex-row bg-foreground text-background items-center justify-between py-8 px-7 sm:px-12 rounded-3xl w-full'>
+              <h4 className='text-center text-3xl font-semibold xl:text-left'>
                 See Our Work in Action.
                 <br /> Start Your Creative Journey with Us!
               </h4>
               <div className='flex flex-col sm:flex-row gap-3 items-center'>
                 <Link
                   href='/contact'
-                  className='group gap-2 text-dark_black font-medium bg-white rounded-full flex items-center lg:gap-4 py-2 pl-5 pr-2 border border-white dark:border-opacity-50 hover:bg-transparent hover:text-white transition-all duration-200 ease-in-out'>
+                  className='bg-background text-foreground group gap-2 font-medium rounded-full flex items-center lg:gap-4 py-2 pl-5 pr-2 border hover:text-background  hover:bg-transparent  transition-all duration-200 ease-in-out'>
                   <span className='group-hover:translate-x-9 transform transition-transform duration-200 ease-in-out'>
                     Let’s Collaborate
                   </span>
@@ -110,9 +110,8 @@ function Innovation() {
                 </Link>
                 <Link
                   href='/#work'
-                  className='group border border-white dark:border-white/50 text-white font-medium bg-dark_black gap-2 rounded-full flex items-center justify-between lg:gap-4 py-2 pl-5 pr-2 hover:opacity-95 hover:bg-transparent hover:text-white transition-all duration-200 ease-in-out'>
-                  <span className='group-hover:translate-x-9 transform transition-transform duration-200 ease-in-out'>
-                    View Portfolio
+                  className='bg-background text-foreground group gap-2 font-medium rounded-full flex items-center lg:gap-4 py-2 pl-5 pr-2 border hover:text-background  hover:bg-transparent  transition-all duration-200 ease-in-out'>
+                  <span className='hover:translate-x-9 transform transition-transform duration-200 ease-in-out'>View Portfolio
                   </span>
                   <svg
                     width='32'
@@ -120,7 +119,7 @@ function Innovation() {
                     viewBox='0 0 32 32'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
-                    className='group-hover:-translate-x-31.25 transition-all duration-200 ease-in-out '>
+                    className='group-hover:-translate-x-30 transition-all duration-200 ease-in-out '>
                     <rect width='32' height='32' rx='16' fill='white' />
                     <path
                       d='M11.832 11.3334H20.1654M20.1654 11.3334V19.6668M20.1654 11.3334L11.832 19.6668'

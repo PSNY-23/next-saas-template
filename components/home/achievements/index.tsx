@@ -25,11 +25,11 @@ function Achievements() {
           <div className='flex flex-col gap-10 md:gap-20'>
             <div className='max-w-3xl text-center mx-auto'>
               <h2>
-                <TextGenerateEffect words="Accolades and achievements celebration our" />
+                <TextGenerateEffect words="Accolades and achievements celebration our" className='text-5xl' />
                 <TextGenerateEffect
                   words="design excellence"
                   delay={1}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>

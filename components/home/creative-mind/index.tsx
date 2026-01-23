@@ -22,11 +22,11 @@ function CreativeMind() {
           <div className='flex flex-col justify-center items-center gap-10 md:gap-20'>
             <div className='max-w-32 text-center'>
               <h2>
-                <TextGenerateEffect words="Meet the creative minds behind" duration={0.5} />
+                <TextGenerateEffect words="Meet the creative minds behind" duration={0.5} className='text-5xl'/>
                 <TextGenerateEffect
                   words="our success"
                   delay={1}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>

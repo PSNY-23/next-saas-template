@@ -27,11 +27,11 @@ function OnlinePresence() {
           <div className='flex flex-col justify-center items-center gap-10 md:gap-20'>
             <div className='max-w-2xl text-center'>
               <h2>
-                <TextGenerateEffect words="How we transformed a small business’s" duration={0.5} />
+                <TextGenerateEffect words="How we transformed a small business’s" duration={0.5} className='text-5xl'/>
                 <TextGenerateEffect
                   words="online presence"
                   delay={1.2}
-                  className="italic font-normal instrument-font"
+                  className="italic text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>
