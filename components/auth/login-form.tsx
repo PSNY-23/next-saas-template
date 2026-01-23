@@ -13,12 +13,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FaGithub } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { SocialButtons } from './social-buttons';
+import { FiLoader } from 'react-icons/fi';
+import { cn } from '@/lib/utils';
 
 const loginSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -56,11 +57,6 @@ export default function LoginForm() {
     );
   }
 
-  const handleSocialLogin = () => {
-    // Implement social login logic (e.g., redirect to OAuth flow)
-    console.log('Redirect to social login');
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -78,7 +74,13 @@ export default function LoginForm() {
                 <FormItem>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormControl>
-                    <Input type="email" id="email" placeholder="Enter your email" {...field} />
+                    <Input
+                      type="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      disabled={formState.isSubmitting}
+                      {...field}
+                    />
                   </FormControl>
                   {formState.errors.email && (
                     <FormMessage id="email-error" className="text-sm text-destructive">
@@ -101,6 +103,7 @@ export default function LoginForm() {
                       type="password"
                       id="password"
                       placeholder="Enter your password"
+                      disabled={formState.isSubmitting}
                       {...field}
                     />
                   </FormControl>
@@ -114,42 +117,33 @@ export default function LoginForm() {
             />
 
             {/* Submit Button */}
+
             <Button type="submit" className="w-full" disabled={formState.isSubmitting}>
-              {formState.isSubmitting ? 'Logging...' : 'Log In'}
+              {formState.isSubmitting && (
+                <FiLoader size="small" className="animate-spin text-background" />
+              )}
+              <span
+                className={cn(
+                  'transition-all duration-150 ease-in',
+                  formState.isSubmitting && 'animate-pulse ml-1'
+                )}
+              >
+                Login
+              </span>
             </Button>
-
-            {/* Social Login */}
-            <div className="flex flex-col gap-2 mt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleSocialLogin}
-                className="w-full flex items-center justify-center space-x-2"
-              >
-                <FcGoogle />
-                <span>Sign in with Google</span>
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleSocialLogin}
-                className="w-full flex items-center justify-center space-x-2"
-              >
-                <FaGithub />
-                <span>Sign in with GitHub</span>
-              </Button>
-            </div>
-
-            <div className="text-sm flex items-center justify-center">
-              <p className="text-muted-foreground">
-                Don&apos;t have an Account?{' '}
-                <Link href="/register" className="text-foreground">
-                  Register
-                </Link>
-              </p>
-            </div>
           </form>
         </Form>
+        {/* Social Login */}
+        <SocialButtons className="mt-6" />
+
+        <div className="text-sm flex items-center justify-center mt-4">
+          <p className="text-muted-foreground">
+            Don&apos;t have an Account?{' '}
+            <Link href="/register" className="text-foreground">
+              Register
+            </Link>
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
