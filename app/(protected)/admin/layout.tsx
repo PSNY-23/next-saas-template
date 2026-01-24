@@ -1,11 +1,16 @@
 
-import React from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AdminSidebar } from '@/components/admin/admin-sidebar';
 import { AdminHeader } from '@/components/admin/admin-header';
 import { chekcAdminSession } from "@/utils/check-session";
 
-const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
+const ProtectedLayout = async ({ 
+  children,
+ 
+ }: { 
+  children: React.ReactNode,
+ 
+ }) => {
    await chekcAdminSession();
   return (
     <>
@@ -14,6 +19,7 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
         <main className='flex-1'>
           <AdminHeader/>
           {children}
+          
         </main>
       </SidebarProvider>
     </>

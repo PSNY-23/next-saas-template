@@ -1,8 +1,9 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import * as React from 'react';
+import {useState, useMemo} from "react"
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,8 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -20,7 +21,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table';
 import {
   flexRender,
   getCoreRowModel,
@@ -32,266 +33,135 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog" // Import Dialog from ShadCN
-import { toast } from "sonner"
+} from '@tanstack/react-table';
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'; // Import Dialog from ShadCN
+import { FaCheckCircle } from 'react-icons/fa';
+import { MdCancel } from 'react-icons/md';
+import { dateStringToLocalDate } from '@/utils/date';
 
-export type User = {
-  id: string
-  image: string | null
-  name: string
-  role: string | null
-  email: string
-  createdAt: Date
-  updatedAt: Date
-  emailVerified: boolean
-  banReason: string | null
-  banned: boolean | null
-  banExpires: Date | null
-}
+type UserTableType = {
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  role: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  banned: boolean | null;
+};
 
 interface UserTableProps {
-  userList: User[]
+  userList: UserTableType[];
 }
 
-const columns: ColumnDef<User>[] = [
+
+
+export function UserTable({ userList }: UserTableProps) {
+  const [selectedUser, setSelectedUser] = useState()
+
+  const columns = useMemo<ColumnDef<UserTableType>[]>(() =>  [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
+    accessorKey: 'name',
+    header: 'Name',
+    cell: ({ row }) => row.getValue('name'),
+  },
+  {
+    accessorKey: 'email',
+    header: 'Email',
+    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
+  },
+  {
+    accessorKey: 'emailVerified',
+    header: 'Email Verified',
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => row.getValue("id"),
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => row.getValue("name"),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div>{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className={`capitalize ${row.getValue("banned") ? "text-red-500" : "text-green-500"}`}>
-        {row.getValue("banned") ? "Banned" : "Active"}
+      <div className="">
+        {row.getValue('emailVerified') ? (
+          <span className="flex gap-2">
+            <FaCheckCircle className="text-green-500 text-lg" />
+            Verified
+          </span>
+        ) : (
+          <span className="flex gap-2">
+            <MdCancel className="text-red-500 text-lg" />
+            Unverified
+          </span>
+        )}
       </div>
     ),
   },
   {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => new Date(row.getValue("createdAt")).toLocaleDateString(),
+    accessorKey: 'role',
+    header: 'Role',
+    cell: ({ row }) => <div>{row.getValue('role')}</div>,
   },
   {
-    accessorKey: "banExpires",
-    header: "Ban Expires",
-    cell: ({ row }) => {
-      const banExpires = row.getValue("banExpires")
-      return banExpires ? new Date(banExpires).toLocaleDateString() : "N/A"
-    },
+    accessorKey: 'banned',
+    header: 'Banned/Active',
+    cell: ({ row }) => (
+      <div className={`capitalize ${row.getValue('banned') ? 'text-red-500' : 'text-green-500'}`}>
+        {row.getValue('banned') ? 'Banned' : 'Active'}
+      </div>
+    ),
   },
   {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const user = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>
-                Copy User ID
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleEdit(user)}>
-                Edit User
-              </DropdownMenuItem>
-              <DropdownMenuItem>View Profile</DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuGroup>
-              {user.banned ? (
-                <DropdownMenuItem>Unban User</DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem>Ban User</DropdownMenuItem>
-              )}
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    accessorKey: 'createdAt',
+    header: 'Created At',
+    cell: ({ row }) => dateStringToLocalDate(row.getValue('createdAt'))
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'Updated At',
+    cell: ({ row }) => dateStringToLocalDate(row.getValue('updatedAt'))
   },
 ]
-
-export function UserTable({ userList }: UserTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([])
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false)
-  const [selectedUser, setSelectedUser] = React.useState<User | null>(null)
-
+  , []);
   const table = useReactTable({
     data: userList,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: (selection) => {
-      setRowSelection(selection)
-      const selectedRows = table.getSelectedRowModel().rows
-      setSelectedUsers(selectedRows.map((row) => row.original))
-    },
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  })
-
-  // Function to handle user editing
-  const handleEdit = (user: User) => {
-    setSelectedUser(user)  // Set the selected user when Edit button is clicked
-    setIsDialogOpen(true)   // Open the dialog
-  }
-
-  // Function to close the dialog
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false)  // Close the dialog
-    setSelectedUser(null)   // Clear the selected user
-  }
+  });
 
   return (
-    <div className="w-full">
-
-      {/* Search and dropdwon */}
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by email..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuGroup>
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                ))}
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-       {/* Table */}
+    <div className="w-full">  
+      {/* Table */}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map(header => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
+                     
                   </TableHead>
                 ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
+            {table.getRowModel().rows.map(row => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
-            )}
+            ))}
           </TableBody>
         </Table>
       </div>
 
       {/* Table footer paginiation */}
-      <div className="flex items-center justify-end space-x-2 py-4">
+      {/* <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -314,10 +184,10 @@ export function UserTable({ userList }: UserTableProps) {
             Next
           </Button>
         </div>
-      </div>
+      </div> */}
 
       {/* Dialog for editing user */}
-      {selectedUser && (
+      {/* {selectedUser && (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent>
             <DialogHeader>
@@ -334,7 +204,7 @@ export function UserTable({ userList }: UserTableProps) {
             <Button onClick={handleCloseDialog}>Close</Button>
           </DialogContent>
         </Dialog>
-      )}
+      )} */}
     </div>
-  )
+  );
 }

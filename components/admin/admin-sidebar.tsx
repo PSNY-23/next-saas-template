@@ -1,4 +1,4 @@
-import { CalendarIcon, HomeIcon, InboxIcon, SearchIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import { CalendarIcon, HomeIcon, InboxIcon, BadgeDollarSignIcon, SearchIcon, SettingsIcon, UserIcon, UserRoundCheckIcon, UserCheckIcon } from 'lucide-react';
 
 import {
   Sidebar,
@@ -14,12 +14,18 @@ import {
 } from '@/components/ui/sidebar';
 import { NavUser } from '@/components/dashboard/nav-user';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 // Menu items.
 const items = [
   {
-    title: 'Home',
+    title: 'Search',
     url: '#',
+    icon: SearchIcon,
+  },
+  {
+    title: 'Dashboard',
+    url: '/admin/dashboard',
     icon: HomeIcon,
   },
   {
@@ -28,23 +34,21 @@ const items = [
     icon: UserIcon
   },
   {
-    title: 'Inbox',
-    url: '#',
-    icon: InboxIcon,
+    title: 'Subscribers',
+    url: '/admin/subscribers',
+    icon: UserCheckIcon,
+    className: 'text-green-500'
+
   },
   {
-    title: 'Calendar',
-    url: '#',
-    icon: CalendarIcon,
+    title: 'Transactions',
+    url: '/admin/transactions',
+    icon: BadgeDollarSignIcon,
   },
-  {
-    title: 'Search',
-    url: '#',
-    icon: SearchIcon,
-  },
+  
   {
     title: 'Settings',
-    url: '#',
+    url: '/admin/settings',
     icon: SettingsIcon,
   },
 ];
@@ -69,7 +73,7 @@ export function AdminSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
-                      <item.icon />
+                      <item.icon className={cn('', item?.className)} />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
