@@ -14,11 +14,11 @@ import {
 } from '@/components/ui/sidebar';
 import { NavUser } from './nav-user';
 import Link from 'next/link';
-
+import {UserCardDataType} from '@/types';
 // Menu items.
 const items = [
   {
-    title: 'Home',
+    title: 'Dashboard',
     url: '#',
     icon: Home,
   },
@@ -44,14 +44,11 @@ const items = [
   },
 ];
 
-// User data
-const userData = {
-  name: 'shadcn',
-  email: 'm@example.com',
-  avatar: '/avatars/shadcn.jpg',
-};
+interface AppSidebarProps {
+  userCardData: UserCardDataType
+}
 
-export function AppSidebar() {
+export async function AppSidebar({ userCardData }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader></SidebarHeader>
@@ -75,7 +72,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={userData} />
+        <NavUser userCardData={userCardData} />
       </SidebarFooter>
     </Sidebar>
   );

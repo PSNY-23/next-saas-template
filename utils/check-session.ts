@@ -12,6 +12,8 @@ export const chekcAdminSession = async () => {
   if (session.user.role === 'user') {
     redirect('/dashboard');
   }
+
+  return { session };
 };
 export const checkUserSession = async () => {
   const session = await auth.api.getSession({
@@ -23,6 +25,7 @@ export const checkUserSession = async () => {
   if (session.user.role === 'admin') {
     redirect('/admin/dashboard');
   }
+  return { session };
 };
 export const checkNoSession = async () => {
   const session = await auth.api.getSession({
@@ -35,4 +38,5 @@ export const checkNoSession = async () => {
   if (session && session.user.role === 'user') {
     redirect('/dashboard');
   }
+  return { session };
 };

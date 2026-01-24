@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { SocialButtons } from './social-buttons';
 import { FiLoader } from 'react-icons/fi';
 import { cn } from '@/lib/utils';
+import { AuthHeader } from './auth-header';
 
 const loginSchema = z.object({
   email: z.email('Please enter a valid email address'),
@@ -60,8 +61,7 @@ export default function LoginForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>Enter your email below to login to your account</CardDescription>
+        <AuthHeader title='Login to your account' subtitle='Enter your email below to login to your account'/>
       </CardHeader>
       <CardContent>
         <Form {...form}>

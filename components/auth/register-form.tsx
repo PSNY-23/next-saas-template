@@ -22,6 +22,7 @@ import Link from 'next/link';
 import { SocialButtons } from './social-buttons';
 import { FiLoader } from "react-icons/fi";
 import { cn } from '@/lib/utils';
+import { AuthHeader } from './auth-header';
 
 const registerSchema = z
   .object({
@@ -68,12 +69,10 @@ export default function RegisterForm() {
     toast.success('Account created successfully!');
     router.push('/dashboard');
   };
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>Enter your information below to create your account</CardDescription>
+        <AuthHeader title='Create an account' subtitle='Enter your information below to create your account'/>
       </CardHeader>
       <CardContent>
         <Form {...form}>

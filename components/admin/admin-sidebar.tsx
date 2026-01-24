@@ -15,6 +15,7 @@ import {
 import { NavUser } from '@/components/dashboard/nav-user';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { UserCardDataType } from '@/types';
 
 // Menu items.
 const items = [
@@ -60,7 +61,11 @@ const userData = {
   avatar: '/avatars/shadcn.jpg',
 };
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  userCardData: UserCardDataType;
+}
+
+export function AdminSidebar({ userCardData }: AdminSidebarProps) {
   return (
     <Sidebar collapsible="icon"  >
       <SidebarHeader></SidebarHeader>
@@ -84,7 +89,7 @@ export function AdminSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={userData} />
+        <NavUser userCardData={userCardData} />
       </SidebarFooter>
     </Sidebar>
   );

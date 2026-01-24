@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Logo from '../header/Logo'
 import { layoutData } from '@/utils/data'
+import { SiteLogo } from '@/components/site-logo';
 
 const { footerData } = layoutData;
 
@@ -14,7 +14,7 @@ const Footer = () => {
       <div className='container'>
         <div className='flex flex-col xl:flex-row py-16 gap-10 justify-between border-b border-dark_black/10 dark:border-white/10'>
           <div className='flex flex-col gap-6 max-w-md'>
-            <Logo />
+            <SiteLogo />
             <p className='opacity-60'>{footerData?.brand?.tagline}</p>
             <div className='flex gap-4'>
               {footerData?.brand?.socialLinks.map((item:any, index:any) => {

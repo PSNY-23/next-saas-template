@@ -5,12 +5,12 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import HeaderLink from './Navigation/HeaderLink'
-import Logo from './Logo'
 import MobileHeader from './Navigation/MobileHeader'
 import ThemeToggler from './ThemeToggle'
 import { layoutData } from '@/utils/data'
 import { useTheme } from 'next-themes'
 import { authClient } from '@/lib/auth-client'
+import { SiteLogo } from '@/components/site-logo'
 
 const { headerData } = layoutData;
 
@@ -76,7 +76,7 @@ const Header = () => {
                 : null
             } `}>
             <div className='flex items-center'>
-              <Logo />
+              <SiteLogo />
             </div>
             <div className='hidden lg:flex bg-dark_black/5 dark:bg-white/5 rounded-3xl p-3'>
               <ul className='flex gap-0 2xl:gap-1.5'>
