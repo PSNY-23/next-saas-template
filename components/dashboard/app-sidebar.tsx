@@ -13,8 +13,9 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { NavUser } from './nav-user';
+import { UserCardDataType } from "@/types";
+import { Logo } from "@/components/site-logo";
 import Link from 'next/link';
-import {UserCardDataType} from '@/types';
 // Menu items.
 const items = [
   {
@@ -51,8 +52,12 @@ interface AppSidebarProps {
 export async function AppSidebar({ userCardData }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader></SidebarHeader>
-      <SidebarContent>
+      <SidebarHeader className='border-b'>
+        <div className="flex pl-2.5 items-center overflow-hidden group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 py-2">
+          <Logo className="flex-1" />
+        </div>
+      </SidebarHeader>
+      <SidebarContent>  
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>

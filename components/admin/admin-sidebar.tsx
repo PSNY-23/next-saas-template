@@ -16,6 +16,7 @@ import { NavUser } from '@/components/dashboard/nav-user';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { UserCardDataType } from '@/types';
+import { Logo } from "@/components/site-logo";
 
 // Menu items.
 const items = [
@@ -67,8 +68,12 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ userCardData }: AdminSidebarProps) {
   return (
-    <Sidebar collapsible="icon"  >
-      <SidebarHeader></SidebarHeader>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <div className="flex items-center overflow-hidden group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <Logo className="[&_img]:w-8 [&_img]:h-8 min-w-0 flex-1" />
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
