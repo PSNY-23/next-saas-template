@@ -15,7 +15,7 @@ const ProtectedLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar userCardData={userCardData} />
-      <SidebarInset className="min-h-0 flex flex-col">
+      <SidebarInset className="flex flex-col">
         <UserHeader />
         <div className="flex-1 min-h-0 overflow-auto">
           <div className="p-4 md:p-6">{children}</div>

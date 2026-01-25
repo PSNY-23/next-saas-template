@@ -69,9 +69,9 @@ interface AdminSidebarProps {
 export function AdminSidebar({ userCardData }: AdminSidebarProps) {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <div className="flex items-center overflow-hidden group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-          <Logo className="[&_img]:w-8 [&_img]:h-8 min-w-0 flex-1" />
+      <SidebarHeader className="border-b border-border">
+        <div className="flex pl-2.5 items-center overflow-hidden group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 py-2">
+          <Logo className="flex-1" />
         </div>
       </SidebarHeader>
       <SidebarContent>
