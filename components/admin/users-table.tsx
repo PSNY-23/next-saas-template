@@ -1,19 +1,6 @@
 "use client";
 
-import * as React from "react";
 import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -25,50 +12,29 @@ import {
 import {
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
   type ColumnDef,
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  EditIcon,
-  MoreHorizontal,
-} from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"; // Import Dialog from ShadCN
+import { EditIcon } from "lucide-react";
+import { dateStringToLocalDate } from "@/utils/date";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import { dateStringToLocalDate } from "@/utils/date";
+import { UserProfileDialog } from "./user-profile-dialog";
 
-type UserTableType = {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  role: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  banned: boolean | null;
-};
+import { UserTableType } from "@/types/admin";
 
 interface UserTableProps {
   userList: UserTableType[];
+  onRefetch?: () => void;
 }
-
-export function UserTable({ userList }: UserTableProps) {
-  const [selectedUser, setSelectedUser] = useState<UserTableType | null>(null);
+export function UserTable({ userList, onRefetch }: UserTableProps) {
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const selectedUser = useMemo(() => {
+    if (!selectedUserId) return null;
+    return userList.find((u) => u.id === selectedUserId) || null;
+  }, [selectedUserId, userList]);
 
   const columns = useMemo<ColumnDef<UserTableType>[]>(
     () => [
@@ -135,7 +101,7 @@ export function UserTable({ userList }: UserTableProps) {
         cell: ({ row }) => (
           <span
             className="flex gap-1 hover:text-blue-500 cursor-pointer"
-            onClick={() => handleEdit(row.original)}
+            onClick={() => handleEdit(row.original.id)}
           >
             <EditIcon size="16" /> Edit
           </span>
@@ -145,20 +111,14 @@ export function UserTable({ userList }: UserTableProps) {
     [],
   );
 
-  const handleEdit = (user: UserTableType) => {
-    setSelectedUser(user);
+  const handleEdit = (userId: string) => {
+    setSelectedUserId(userId);
     setIsModalOpen(true);
   };
   // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedUser(null);
-  };
-  // Handle user details update
-  const handleUpdateUser = (updatedUser: UserTableType) => {
-    // You can send this updatedUser data to your backend or update the user list here
-    console.log(updatedUser);
-    closeModal();
+    setSelectedUserId(null);
   };
 
   const table = useReactTable({
@@ -203,35 +163,12 @@ export function UserTable({ userList }: UserTableProps) {
       </div>
 
       {/* Dialog for editing user */}
-      {selectedUser && isModalOpen && (
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit User: {selectedUser.name}</DialogTitle>
-            </DialogHeader>
-            <div>
-              <p>
-                <strong>ID:</strong> {selectedUser.id}
-              </p>
-              <p>
-                <strong>Email:</strong> {selectedUser.email}
-              </p>
-              <p>
-                <strong>Role:</strong> {selectedUser.role}
-              </p>
-              <p>
-                <strong>Created At:</strong>{" "}
-                {new Date(selectedUser.createdAt).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Status:</strong>{" "}
-                {selectedUser.banned ? "Banned" : "Active"}
-              </p>
-            </div>
-            <Button onClick={closeModal}>Close</Button>
-          </DialogContent>
-        </Dialog>
-      )}
+      <UserProfileDialog
+        user={selectedUser}
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onRefetch={onRefetch}
+      />
     </div>
   );
 }

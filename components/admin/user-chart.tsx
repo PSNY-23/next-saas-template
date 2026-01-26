@@ -137,7 +137,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface UserChartProps {
-  createdAtArray: Date[]
+  createdAtArray: string[]
 }
 
 export function UserChart({createdAtArray}:UserChartProps) {

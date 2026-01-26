@@ -1,4 +1,4 @@
-import { betterAuth } from 'better-auth';
+import { APIError, betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 // If your Prisma file is located elsewhere, you can change the path
 import prisma from './db';
@@ -25,4 +25,18 @@ export const auth = betterAuth({
     },
   },
   plugins: [admin()],
+  user: {
+    deleteUser: {
+      enabled: true,
+      beforeDelete: async (user, request) => {
+        if (user.email.includes("admin")) {
+            throw new APIError("BAD_REQUEST", {
+                message: "Admin accounts can't be deleted",
+            });
+        }
+    },
+    }
+  }
+  
+
 });
