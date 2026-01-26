@@ -22,17 +22,20 @@ import { MdCancel } from "react-icons/md";
 import { UserProfileDialog } from "./user-profile-dialog";
 
 import { UserTableType } from "@/types/admin";
+import { Skeleton } from "../ui/skeleton";
 
 interface UserTableProps {
-  userList: UserTableType[];
+  isLoading: boolean;
+  isError: boolean;
+  userList: UserTableType[] | undefined;
   onRefetch?: () => void;
 }
-export function UserTable({ userList, onRefetch }: UserTableProps) {
+export function UserTable({ isLoading, isError, userList, onRefetch }: UserTableProps) {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const selectedUser = useMemo(() => {
-    if (!selectedUserId) return null;
+    if (!selectedUserId || !userList) return null;
     return userList.find((u) => u.id === selectedUserId) || null;
   }, [selectedUserId, userList]);
 
@@ -41,21 +44,21 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
       {
         accessorKey: "name",
         header: "Name",
-        cell: ({ row }) => row.getValue("name"),
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-20" /> : row.getValue("name"),
       },
       {
         accessorKey: "email",
         header: "Email",
-        cell: ({ row }) => (
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-24" /> : (
           <div className="lowercase">{row.getValue("email")}</div>
         ),
       },
       {
         accessorKey: "emailVerified",
         header: "Email Verified",
-        cell: ({ row }) => (
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-16" /> :  (
           <div className="">
-            {row.getValue("emailVerified") ? (
+            {row.getValue("emailVerified") ? ( 
               <span className="flex gap-2">
                 <FaCheckCircle className="text-green-500 text-lg" />
                 Verified
@@ -72,12 +75,12 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
       {
         accessorKey: "role",
         header: "Role",
-        cell: ({ row }) => <div>{row.getValue("role")}</div>,
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-20" /> : <div>{row.getValue("role")}</div>,
       },
       {
         accessorKey: "banned",
         header: "Banned/Active",
-        cell: ({ row }) => (
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-20" /> : (
           <div
             className={`capitalize ${row.getValue("banned") ? "text-red-500" : "text-green-500"}`}
           >
@@ -88,17 +91,17 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
       {
         accessorKey: "createdAt",
         header: "Created At",
-        cell: ({ row }) => dateStringToLocalDate(row.getValue("createdAt")),
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-20" /> : dateStringToLocalDate(row.getValue("createdAt")),
       },
       {
         accessorKey: "updatedAt",
         header: "Updated At",
-        cell: ({ row }) => dateStringToLocalDate(row.getValue("updatedAt")),
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-20" /> : dateStringToLocalDate(row.getValue("updatedAt")),
       },
       {
         accessorKey: "action",
         header: "Action",
-        cell: ({ row }) => (
+        cell: ({ row }) => isLoading ? <Skeleton className="h-5 w-16" /> : (
           <span
             className="flex gap-1 hover:text-blue-500 cursor-pointer"
             onClick={() => handleEdit(row.original.id)}
@@ -108,7 +111,7 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
         ),
       },
     ],
-    [],
+    [isLoading],
   );
 
   const handleEdit = (userId: string) => {
@@ -121,8 +124,15 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
     setSelectedUserId(null);
   };
 
+  const tableData = useMemo(() => {
+    if (isLoading && (!userList || userList.length === 0)) {
+      return Array(5).fill({}) as UserTableType[];
+    }
+    return userList ?? [];
+  }, [isLoading, userList]);
+
   const table = useReactTable({
-    data: userList,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -149,15 +159,38 @@ export function UserTable({ userList, onRefetch }: UserTableProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+            {isError ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <div className="flex items-center justify-center gap-2 text-red-500">
+                    <MdCancel className="text-lg" />
+                    <span>Error fetching users</span>
+                  </div>
+                </TableCell>
               </TableRow>
-            ))}
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No users found.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>
