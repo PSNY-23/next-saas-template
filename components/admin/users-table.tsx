@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import {useState, useMemo} from "react"
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import * as React from "react";
+import { useState, useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,8 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -21,7 +21,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   flexRender,
   getCoreRowModel,
@@ -33,20 +33,26 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
-} from '@tanstack/react-table';
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
+} from "@tanstack/react-table";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  EditIcon,
+  MoreHorizontal,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'; // Import Dialog from ShadCN
-import { FaCheckCircle } from 'react-icons/fa';
-import { MdCancel } from 'react-icons/md';
-import { dateStringToLocalDate } from '@/utils/date';
+} from "@/components/ui/dialog"; // Import Dialog from ShadCN
+import { FaCheckCircle } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
+import { dateStringToLocalDate } from "@/utils/date";
 
 type UserTableType = {
+  id: string;
   name: string;
   email: string;
   emailVerified: boolean;
@@ -60,67 +66,101 @@ interface UserTableProps {
   userList: UserTableType[];
 }
 
-
-
 export function UserTable({ userList }: UserTableProps) {
-  const [selectedUser, setSelectedUser] = useState()
+  const [selectedUser, setSelectedUser] = useState<UserTableType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const columns = useMemo<ColumnDef<UserTableType>[]>(() =>  [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    cell: ({ row }) => row.getValue('name'),
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
-  },
-  {
-    accessorKey: 'emailVerified',
-    header: 'Email Verified',
-    cell: ({ row }) => (
-      <div className="">
-        {row.getValue('emailVerified') ? (
-          <span className="flex gap-2">
-            <FaCheckCircle className="text-green-500 text-lg" />
-            Verified
+  const columns = useMemo<ColumnDef<UserTableType>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => row.getValue("name"),
+      },
+      {
+        accessorKey: "email",
+        header: "Email",
+        cell: ({ row }) => (
+          <div className="lowercase">{row.getValue("email")}</div>
+        ),
+      },
+      {
+        accessorKey: "emailVerified",
+        header: "Email Verified",
+        cell: ({ row }) => (
+          <div className="">
+            {row.getValue("emailVerified") ? (
+              <span className="flex gap-2">
+                <FaCheckCircle className="text-green-500 text-lg" />
+                Verified
+              </span>
+            ) : (
+              <span className="flex gap-2">
+                <MdCancel className="text-red-500 text-lg" />
+                Unverified
+              </span>
+            )}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "role",
+        header: "Role",
+        cell: ({ row }) => <div>{row.getValue("role")}</div>,
+      },
+      {
+        accessorKey: "banned",
+        header: "Banned/Active",
+        cell: ({ row }) => (
+          <div
+            className={`capitalize ${row.getValue("banned") ? "text-red-500" : "text-green-500"}`}
+          >
+            {row.getValue("banned") ? "Banned" : "Active"}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Created At",
+        cell: ({ row }) => dateStringToLocalDate(row.getValue("createdAt")),
+      },
+      {
+        accessorKey: "updatedAt",
+        header: "Updated At",
+        cell: ({ row }) => dateStringToLocalDate(row.getValue("updatedAt")),
+      },
+      {
+        accessorKey: "action",
+        header: "Action",
+        cell: ({ row }) => (
+          <span
+            className="flex gap-1 hover:text-blue-500 cursor-pointer"
+            onClick={() => handleEdit(row.original)}
+          >
+            <EditIcon size="16" /> Edit
           </span>
-        ) : (
-          <span className="flex gap-2">
-            <MdCancel className="text-red-500 text-lg" />
-            Unverified
-          </span>
-        )}
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'role',
-    header: 'Role',
-    cell: ({ row }) => <div>{row.getValue('role')}</div>,
-  },
-  {
-    accessorKey: 'banned',
-    header: 'Banned/Active',
-    cell: ({ row }) => (
-      <div className={`capitalize ${row.getValue('banned') ? 'text-red-500' : 'text-green-500'}`}>
-        {row.getValue('banned') ? 'Banned' : 'Active'}
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'createdAt',
-    header: 'Created At',
-    cell: ({ row }) => dateStringToLocalDate(row.getValue('createdAt'))
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: 'Updated At',
-    cell: ({ row }) => dateStringToLocalDate(row.getValue('updatedAt'))
-  },
-]
-  , []);
+        ),
+      },
+    ],
+    [],
+  );
+
+  const handleEdit = (user: UserTableType) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+  // Close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
+  // Handle user details update
+  const handleUpdateUser = (updatedUser: UserTableType) => {
+    // You can send this updatedUser data to your backend or update the user list here
+    console.log(updatedUser);
+    closeModal();
+  };
+
   const table = useReactTable({
     data: userList,
     columns,
@@ -128,28 +168,30 @@ export function UserTable({ userList }: UserTableProps) {
   });
 
   return (
-    <div className="w-full">  
+    <div className="w-full">
       {/* Table */}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                     
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.map(row => (
+            {table.getRowModel().rows.map((row) => (
               <TableRow key={row.id}>
-                {row.getVisibleCells().map(cell => (
+                {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
@@ -160,51 +202,36 @@ export function UserTable({ userList }: UserTableProps) {
         </Table>
       </div>
 
-      {/* Table footer paginiation */}
-      {/* <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div> */}
-
       {/* Dialog for editing user */}
-      {/* {selectedUser && (
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      {selectedUser && isModalOpen && (
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit User: {selectedUser.name}</DialogTitle>
             </DialogHeader>
             <div>
-              <p><strong>ID:</strong> {selectedUser.id}</p>
-              <p><strong>Email:</strong> {selectedUser.email}</p>
-              <p><strong>Role:</strong> {selectedUser.role}</p>
-              <p><strong>Created At:</strong> {new Date(selectedUser.createdAt).toLocaleDateString()}</p>
-              <p><strong>Status:</strong> {selectedUser.banned ? "Banned" : "Active"}</p>
-              <p><strong>Ban Expires:</strong> {selectedUser.banExpires ? new Date(selectedUser.banExpires).toLocaleDateString() : "N/A"}</p>
+              <p>
+                <strong>ID:</strong> {selectedUser.id}
+              </p>
+              <p>
+                <strong>Email:</strong> {selectedUser.email}
+              </p>
+              <p>
+                <strong>Role:</strong> {selectedUser.role}
+              </p>
+              <p>
+                <strong>Created At:</strong>{" "}
+                {new Date(selectedUser.createdAt).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                {selectedUser.banned ? "Banned" : "Active"}
+              </p>
             </div>
-            <Button onClick={handleCloseDialog}>Close</Button>
+            <Button onClick={closeModal}>Close</Button>
           </DialogContent>
         </Dialog>
-      )} */}
+      )}
     </div>
   );
 }
