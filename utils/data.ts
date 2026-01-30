@@ -11,7 +11,7 @@
 
  const footerData = {
     brand: {
-        name: "Awake",
+        name: "Alchemist",
         tagline: "Empowering businesses with innovative solutions. Let's create something amazing together.",
         socialLinks: [
             {
@@ -58,10 +58,10 @@
     contactDetails: {
         name:"Contact Details",
         address: "81 Rivington Street London EC2A 3AY",
-        email: "hello@awake.agency",
+        email: "hello@alchemist.agency",
         phone: "0105 192 3556"
     },
-    copyright: "©2025 Awake. All Rights Reserved"
+    copyright: "©2025 Alchemist. All Rights Reserved"
 };
 
 export const layoutData = { headerData, footerData}
@@ -267,7 +267,7 @@ const startupPlanList = [
 
 const faqList = [
   {
-    faq_que: 'What services does Awake Agency offer?',
+    faq_que: 'What services does Alchemist Agency offer?',
     faq_ans:
       'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
   },
@@ -277,7 +277,7 @@ const faqList = [
       'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
   },
   {
-    faq_que: 'How is pricing structured at Awake Agency?',
+    faq_que: 'How is pricing structured at Alchemist Agency?',
     faq_ans:
       'Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.',
   },

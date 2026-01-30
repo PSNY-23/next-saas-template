@@ -26,7 +26,9 @@ export const SiteLogo = ({ className }: SiteLogoProps) => {
         className={cn(className)}
       />
 
-      <span className="text-xl font-semibold mask-r-from-accent-foreground">Alchemist</span>
+      <span className="text-lg sm:text-xl font-semibold mask-r-from-accent-foreground">
+        Alchemist
+      </span>
     </Link>
   );
 };
@@ -52,12 +54,11 @@ export const Logo = ({ className }: { className?: string }) => {
       <span
         className={cn(
           " truncate font-semibold transition-all duration-150 ease-in-out",
-          !isExpanded && "hidden"
+          !isExpanded && "hidden",
         )}
       >
         Alchemist
       </span>
     </Link>
   );
-}
-;
+};

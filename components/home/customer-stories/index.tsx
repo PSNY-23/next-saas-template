@@ -1,34 +1,37 @@
-"use client"
-import Image from 'next/image'
-import { TextGenerateEffect } from '@/components/ui/text-generate-effect'
-import { motion, useInView } from 'motion/react'
-import { useRef } from 'react'
+"use client";
+import Image from "next/image";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 function CustomerStories() {
   // Refs for each box
-  const topLeftRef = useRef(null)
-  const topRightRef = useRef(null)
-  const bottomLeftRef = useRef(null)
-  const bottomRightRef = useRef(null)
+  const topLeftRef = useRef(null);
+  const topRightRef = useRef(null);
+  const bottomLeftRef = useRef(null);
+  const bottomRightRef = useRef(null);
 
   // Detect if each box is in view
-  const topLeftInView = useInView(topLeftRef, { once: true })
-  const topRightInView = useInView(topRightRef, { once: true })
-  const bottomLeftInView = useInView(bottomLeftRef, { once: true })
-  const bottomRightInView = useInView(bottomRightRef, { once: true })
+  const topLeftInView = useInView(topLeftRef, { once: true });
+  const topRightInView = useInView(topRightRef, { once: true });
+  const bottomLeftInView = useInView(bottomLeftRef, { once: true });
+  const bottomRightInView = useInView(bottomRightRef, { once: true });
 
   return (
     <section>
       <div className="2xl:py-20 py-11">
-        <div className="container">
+        <div>
           <div className="flex flex-col justify-center gap-10 md:gap-20">
             <div className="mx-auto max-w-2xl flex items-center text-center">
               <h2>
-                <TextGenerateEffect words="What our satisfied customers are saying" className='text-5xl' />
+                <TextGenerateEffect
+                  words="What our satisfied customers are saying"
+                  className="text-3xl md:text-5xl"
+                />
                 <TextGenerateEffect
                   words="about us"
                   delay={1}
-                  className="italic text-5xl font-normal instrument-font"
+                  className="italic text-3xl md:text-5xl font-normal instrument-font"
                 />
               </h2>
             </div>
@@ -41,14 +44,14 @@ function CustomerStories() {
                   initial={{ x: -100, y: -100, opacity: 0 }}
                   animate={topLeftInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
-                  className="p-8 gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/customerStories/customer_bg_img.jpg')] object-cover bg-center h-full w-full bg-cover bg-no-repeat"
+                  className="p-8 gap-20 md:gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/customerStories/customer_bg_img.jpg')] object-cover bg-center h-full w-full bg-cover bg-no-repeat"
                 >
                   <span className="text-white/60 uppercase text-sm font-medium">
                     Customer stories
                   </span>
                   <div className="flex flex-col gap-6">
-                    <h3 className="text-white text-5xl">
-                      “Awake’s expertise transformed my vision into success!”
+                    <h3 className="text-white text-2xl md:text-5xl">
+                      “Alchemist’s expertise transformed my vision into success!”
                     </h3>
                     <div className="flex flex-col gap-1">
                       <p className="text-white font-medium">Kabir Shah</p>
@@ -65,7 +68,7 @@ function CustomerStories() {
                   initial={{ x: 100, y: -100, opacity: 0 }}
                   animate={topRightInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
-                  className="flex flex-col justify-between gap-36 xl:max-w-25 bg-pale-yellow rounded-2xl p-8"
+                  className="flex flex-col justify-between gap-20 md:gap-36 xl:max-w-25 bg-pale-yellow rounded-2xl p-8"
                 >
                   <div>
                     <span className="uppercase text-sm font-medium text-dark_black/60">
@@ -73,8 +76,10 @@ function CustomerStories() {
                     </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <h2 className="text-7xl font-medium dark:text-dark_black">91%</h2>
-                    <h3 className="dark:text-dark_black text-2xl">
+                    <h2 className="text-5xl md:text-7xl font-medium dark:text-dark_black">
+                      91%
+                    </h2>
+                    <h3 className="dark:text-dark_black text-xl md:text-2xl">
                       Clients recommend our design services.
                     </h3>
                   </div>
@@ -95,7 +100,8 @@ function CustomerStories() {
                       Customer stories
                     </span>
                     <h3 className="text-white text-2xl">
-                      Their creativity and attention to detail transformed our brand completely!
+                      Their creativity and attention to detail transformed our
+                      brand completely!
                     </h3>
                     <div>
                       <Image
@@ -115,14 +121,16 @@ function CustomerStories() {
                   initial={{ x: 100, y: 100, opacity: 0 }}
                   animate={bottomRightInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
-                  className="flex flex-col gap-24 justify-between bg-dark_black/5 dark:bg-white/5 p-8 rounded-2xl"
+                  className="flex flex-col gap-12 md:gap-24 justify-between bg-dark_black/5 dark:bg-white/5 p-8 rounded-2xl"
                 >
                   <div className="flex flex-col gap-6">
                     <span className="text-dark_black/60 dark:text-white/60 uppercase text-sm font-medium">
                       Customer stories
                     </span>
-                    <h2 className="text-2xl lg:text-5xl">
-                      “Awake Design Agency brought our ideas to life with exceptional creativity and precision, exceeding expectations.”
+                    <h2 className="text-xl md:text-3xl lg:text-5xl">
+                      “Alchemist Design Agency brought our ideas to life with
+                      exceptional creativity and precision, exceeding
+                      expectations.”
                     </h2>
                   </div>
                   <div className="flex flex-col gap-1">
@@ -138,7 +146,7 @@ function CustomerStories() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default CustomerStories
+export default CustomerStories;

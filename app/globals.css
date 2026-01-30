@@ -48,7 +48,7 @@
   /*
     Custom tailwindcss classes
   */
-  
+
   --shadow-header_shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 
   --color-dark_black: #1b1d1e;
@@ -102,7 +102,6 @@
       height: 0;
     }
   }
-
 }
 
 :root {
@@ -187,10 +186,9 @@
 
   /* Default styles for body */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
     @apply text-base font-normal;
   }
-
 }
 
 /* @layer components (Reusable UI Components) */
@@ -210,7 +208,7 @@
 @layer utilities {
   /* Custom utility for instrument font */
   .instrument-font {
-    font-family: 'Instrument Serif', serif;
+    font-family: "Instrument Serif", serif;
   }
 
   /* Custom utility for hero mask */
@@ -232,16 +230,76 @@
   }
 
   /* Utility for container */
+  .container::before,
+  .container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 1px;
+    background-color: var(--color-border);
+    z-index: 60;
+  }
+
+  .container::before {
+    left: 0;
+  }
+
+  .container::after {
+    right: 0;
+  }
+
   .container {
-    @apply w-full max-w-[82.8rem] my-0 mx-auto py-0 sm:px-7 px-5;
+    @apply relative w-full max-w-[82.8rem] my-0 mx-auto py-0;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    section {
+      padding: 1rem 3rem;
+    }
+  }
+
+  /* LEFT TRIANGLE */
+  section::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid var(--color-border);
+  }
+
+  /* RIGHT TRIANGLE */
+  section::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 0;
+
+    width: 0;
+    height: 0;
+
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid var(--color-border);
   }
 
   /* Scroll behavior and font-family for HTML */
   html {
     scroll-behavior: smooth;
-    font-family: 'Inter Tight', sans-serif
+    font-family: "Inter Tight", sans-serif;
   }
-  
 }
-
-
