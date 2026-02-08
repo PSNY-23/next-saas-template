@@ -138,14 +138,7 @@ const Header = () => {
                 {/* ---------------------Light/Dark Mode button-------------------- */}
                 <ThemeToggler />
 
-                <div className="flex items-center gap-1.5 lg:hidden">
-                  <button
-                    onClick={() => setSidebarOpen(!sidebarOpen)}
-                    className="p-1 hover:bg-dark_black/5 dark:hover:bg-white/5 rounded-full transition-colors"
-                  >
-                    <StartMoonIcon />
-                  </button>
-                </div>
+                
               </div>
             </nav>
           </div>

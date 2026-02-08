@@ -19,13 +19,13 @@ function Innovation() {
   });
   return (
     <section id="services">
-      <div ref={ref} className="2xl:py-20 py-11">
+      <div ref={ref} className="2xl:py-20 py-11 w-full">
         <div>
           <div className="flex flex-col gap-12">
             <div className="flex flex-col justify-center items-center gap-10 lg:gap-16">
               <motion.div
-                {...bottomAnimation(1)}
-                className="max-w-(--breakpoint-Xsm) text-center"
+                // {...bottomAnimation(1)}
+                className="text-center"
               >
                 <h2>
                   <TextGenerateEffect
@@ -41,7 +41,7 @@ function Innovation() {
                 </h2>
               </motion.div>
               <div ref={ref} className="w-full">
-                <div className="grid auto-rows-max grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 w-full">
                   {innovationList?.map((items, index) => {
                     return (
                       <motion.div

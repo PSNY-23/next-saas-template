@@ -19,7 +19,7 @@ function CustomerStories() {
 
   return (
     <section>
-      <div className="2xl:py-20 py-11">
+      <div className="py-12 2xl:py-20">
         <div>
           <div className="flex flex-col justify-center gap-10 md:gap-20">
             <div className="mx-auto max-w-2xl flex items-center text-center">
