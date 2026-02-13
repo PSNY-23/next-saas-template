@@ -14,8 +14,8 @@ function OnlinePresence() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const bottomAnimation = (index: number) => ({
-    initial: { y: 50, opacity: 0 },
-    animate: inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 },
+    initial: { y: 20, opacity: 0 },
+    animate: inView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 },
     transition: { duration: 0.8, delay: 0.4 + index * 0.2 },
   });
 

@@ -41,9 +41,9 @@ function HeroSection() {
                   />
                 </h1>
                 <p className="max-w-38 text-dark_black/60 dark:text-white/60 text-sm md:text-base px-4 md:px-0">
-                  At Alchemist, we help small startups tackle the world’s biggest
-                  challenges with tailored solutions, guiding you from strategy
-                  to success in a competitive market.
+                  At Alchemist, we help small startups tackle the world’s
+                  biggest challenges with tailored solutions, guiding you from
+                  strategy to success in a competitive market.
                 </p>
               </div>
 
@@ -54,7 +54,7 @@ function HeroSection() {
                 <div className="flex flex-col items-center justify-center gap-6 md:gap-8 w-full sm:flex-row">
                   {/* ----------- Get started Link -------------- */}
                   <Link
-                    href="/contact"
+                    href="/login"
                     className="group bg-purple_blue text-white font-medium flex flex-row justify-between items-center py-2 px-5 rounded-full max-w-64 w-full md:py-3 border border-purple_blue transition-all duration-200 ease-in-out hover:bg-transparent hover:text-purple_blue"
                   >
                     <span className="flex text-base md:text-lg font-semibold text-start transform transition-transform duration-200 ease-in-out group-hover:translate-x-28">

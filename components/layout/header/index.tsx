@@ -12,7 +12,8 @@ import { useTheme } from "next-themes";
 import { authClient } from "@/lib/auth-client";
 import { SiteLogo } from "@/components/site-logo";
 import { StartMoonIcon } from "@/public/svg/star-moon";
-import { HamburgerIcon } from "@/public/svg/hamburger";
+import { MenuIcon } from "@/public/svg/menu-icon";
+import { CloseIcon } from "@/public/svg/close-icon";
 
 const { headerData } = layoutData;
 
@@ -138,6 +139,15 @@ const Header = () => {
                 {/* ---------------------Light/Dark Mode button-------------------- */}
                 <ThemeToggler />
 
+                {/* ---------------------Hamburger Menu Button (Mobile)-------------------- */}
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="lg:hidden flex items-center justify-center p-2 hover:bg-dark_black/5 dark:hover:bg-white/5 rounded-md transition-colors"
+                  aria-label="Open mobile menu"
+                >
+                  <MenuIcon />
+                </button>
+
                 
               </div>
             </nav>
@@ -160,16 +170,21 @@ const Header = () => {
             <p className="text-lg font-bold">Menu</p>
             <button
               onClick={() => setSidebarOpen(false)}
+              className="p-2 hover:bg-dark_black/5 dark:hover:bg-white/5 rounded-md transition-colors"
               aria-label="Close mobile menu"
             >
-              <HamburgerIcon />
+              <CloseIcon />
             </button>
           </div>
           <div className="p-4">
             <ul className="flex flex-col">
               {menuData &&
                 menuData?.map((item, index) => (
-                  <MobileHeader key={index} item={item} />
+                  <MobileHeader
+                    key={index}
+                    item={item}
+                    onClose={() => setSidebarOpen(false)}
+                  />
                 ))}
               <div className="flex flex-col items-center gap-3 px-2 mt-2">
                 {data?.user ? (
@@ -202,16 +217,18 @@ const Header = () => {
                 ) : (
                   <>
                     <Link
-                      href={"/signin"}
+                      href="/login"
                       className="w-full border border-dark_black dark:border-white text-primary px-4 py-2 rounded-md hover:bg-dark_black dark:hover:bg-white hover:text-white dark:hover:text-dark_black text-center font-medium"
+                      onClick={() => setSidebarOpen(false)}
                     >
-                      Sign In
+                      Login
                     </Link>
                     <Link
-                      href={"/signup"}
+                      href="/register"
                       className="w-full text-white dark:text-dark_black px-4 py-2 bg-dark_black dark:bg-white rounded-md hover:opacity-90 text-center font-medium"
+                      onClick={() => setSidebarOpen(false)}
                     >
-                      Sign Up
+                      Register
                     </Link>
                   </>
                 )}

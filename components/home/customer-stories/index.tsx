@@ -41,7 +41,7 @@ function CustomerStories() {
                 {/* Top Left Box */}
                 <motion.div
                   ref={topLeftRef}
-                  initial={{ x: -100, y: -100, opacity: 0 }}
+                  initial={{ x: -30, y: -30, opacity: 0 }}
                   animate={topLeftInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
                   className="p-8 gap-20 md:gap-64 rounded-2xl flex flex-col relative bg-[url('/images/home/customerStories/customer_bg_img.jpg')] object-cover bg-center h-full w-full bg-cover bg-no-repeat"
@@ -51,7 +51,8 @@ function CustomerStories() {
                   </span>
                   <div className="flex flex-col gap-6">
                     <h3 className="text-white text-2xl md:text-5xl">
-                      “Alchemist’s expertise transformed my vision into success!”
+                      “Alchemist’s expertise transformed my vision into
+                      success!”
                     </h3>
                     <div className="flex flex-col gap-1">
                       <p className="text-white font-medium">Kabir Shah</p>
@@ -65,7 +66,7 @@ function CustomerStories() {
                 {/* Top Right Box */}
                 <motion.div
                   ref={topRightRef}
-                  initial={{ x: 100, y: -100, opacity: 0 }}
+                  initial={{ x: 30, y: -30, opacity: 0 }}
                   animate={topRightInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
                   className="flex flex-col justify-between gap-20 md:gap-36 xl:max-w-25 bg-pale-yellow rounded-2xl p-8"
@@ -90,7 +91,7 @@ function CustomerStories() {
                 {/* Bottom Left Box */}
                 <motion.div
                   ref={bottomLeftRef}
-                  initial={{ x: -100, y: 100, opacity: 0 }}
+                  initial={{ x: -30, y: 30, opacity: 0 }}
                   animate={bottomLeftInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
                   className="flex flex-col justify-between bg-dark_black xl:max-w-25 dark:bg-white/10 rounded-2xl p-8"
@@ -118,7 +119,7 @@ function CustomerStories() {
                 {/* Bottom Right Box */}
                 <motion.div
                   ref={bottomRightRef}
-                  initial={{ x: 100, y: 100, opacity: 0 }}
+                  initial={{ x: 30, y: 30, opacity: 0 }}
                   animate={bottomRightInView ? { x: 0, y: 0, opacity: 1 } : {}}
                   transition={{ duration: 0.8 }}
                   className="flex flex-col gap-12 md:gap-24 justify-between bg-dark_black/5 dark:bg-white/5 p-8 rounded-2xl"

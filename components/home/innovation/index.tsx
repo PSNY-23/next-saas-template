@@ -48,7 +48,7 @@ function Innovation() {
                         key={index}
                         className={`${items.bg_color} flex flex-col p-8 rounded-2xl gap-6 lg:gap-9`}
                         initial={{
-                          scale: 1.2,
+                          scale: 1.05,
                           opacity: 0,
                           filter: "blur(8px)",
                         }}

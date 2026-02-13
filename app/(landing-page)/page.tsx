@@ -14,9 +14,9 @@ import WebResult from "@/components/home/web-result";
 import { checkNoSession } from "@/utils/check-session";
 
 export default async function Page() {
-  // await checkNoSession();
+  await checkNoSession();
   return (
-    <div className="relative w-full px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 2xl:px-10">
+    <div className="relative w-full px-2 sm:px-2 md:px-4 lg:px-6 xl:px-8 2xl:px-10 overflow-x-hidden">
       <Header />
       <div className="container">
         <main className="flex flex-col">
@@ -25,13 +25,13 @@ export default async function Page() {
           <WebResult />
           {/* No problem in above */}
 
-          {/* <Innovation /> */}
-          <OnlinePresence /> 
-          <CreativeMind /> 
+          <Innovation />
+          <OnlinePresence />
+          <CreativeMind />
           <CustomerStories />
 
           {/* No problem in the below */}
-          
+
           <Subscription />
           <Faq />
           <Achievements />
