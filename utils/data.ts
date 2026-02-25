@@ -57,9 +57,9 @@
     },
     contactDetails: {
         name:"Contact Details",
-        address: "81 Rivington Street London EC2A 3AY",
+        address: "Noida, Delhi",
         email: "hello@alchemist.agency",
-        phone: "0105 192 3556"
+        phone: "+91 70738xxxxx"
     },
     copyright: "©2025 Alchemist. All Rights Reserved"
 };

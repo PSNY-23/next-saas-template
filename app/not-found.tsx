@@ -12,12 +12,14 @@ import {
 } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
 import { SearchIcon } from "lucide-react"
+import Link from "next/link"
 
 export default function Page() {
   return (
     <Empty>
       <EmptyHeader>
         <EmptyTitle>404 - Not Found</EmptyTitle>
+        <Link href="/">Go back to home page</Link>
         <EmptyDescription>
           The page you&apos;re looking for doesn&apos;t exist. Try searching for
           what you need below.
