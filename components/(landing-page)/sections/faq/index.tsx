@@ -4,7 +4,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../../ui/accordion";
+} from "../../../ui/accordion";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { pageData } from "@/utils/data";
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { motion } from "motion/react";
-import StarRating from "../../shared/star-rating";
+import StarRating from "@/components/(landing-page)/star-rating";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { pageData } from "@/utils/data";
 
